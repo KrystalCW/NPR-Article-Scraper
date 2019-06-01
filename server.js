@@ -82,8 +82,6 @@ app.get("/articles", function(req, res) {
 
 // Route for grabbing a specific Article by id, populate it with it's note
 app.get("/articles/:id", function(req, res) {
-  // TODO
-  // ====
   db.Article.findOne({ _id: req.params.id })
   .populate("note")
   .then(function(dbArticle) {
@@ -92,9 +90,6 @@ app.get("/articles/:id", function(req, res) {
   .catch(function(err) {
     res.json(err);
   })
-  // Finish the route so it finds one article using the req.params.id,
-  // and run the populate method with "note",
-  // then responds with the article with the note included
 });
 
 // Route for saving/updating an Article's associated Note
@@ -109,12 +104,13 @@ app.post("/articles/:id", function(req, res) {
   .catch(function(err) {
     res.json(err);
   })
-  // TODO
-  // ====
-  // save the new note that gets posted to the Notes collection
-  // then find an article from the req.params.id
-  // and update it's "note" property with the _id of the new note
 });
+
+// app.delete("/delete/:id", function(req, res) {
+//   db.Note.deleteOne({ _id: req.params.id }, function (err) {
+//     if (err) return handleError(err);
+//   });
+// });
 
 // Start the server
 app.listen(PORT, function() {
