@@ -26,8 +26,10 @@ app.use(express.json());
 // Make public a static folder
 app.use(express.static("public"));
 
+var MONGDB_URI = process.env.MONGODB_URI || "mongodb://localhost/NPRArticleSaver";
+
 // Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/NPRArticleSaver", { useNewUrlParser: true });
+mongoose.connect(MONGDB_URI);
 
 // Routes
 
@@ -107,6 +109,7 @@ app.post("/articles/:id", function(req, res) {
 });
 
 app.delete("/delete/:id", function(req, res) {
+  // db.Article.findOne({ _id: })
   console.log(req.params.id);
   db.Note.deleteOne({ _id: req.params.id }, function (err) {
     if (err) return handleError(err);
