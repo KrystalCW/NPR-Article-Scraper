@@ -1,11 +1,17 @@
-$(document).on("click", ".scrape-new", function() {
-  $("#articles").empty();
+$(document).ready(scrapeArticles());
+
+function scrapeArticles() {
   $.ajax({
     method: "GET",
     url: "/scrape"
   }).then(function() {
     displayArticles();
   })
+}
+
+$(document).on("click", ".scrape-new", function() {
+  $("#articles").empty();
+  scrapeArticles();
 })
 
 // Grab the articles as a json
@@ -20,7 +26,7 @@ function displayArticles() {
 });
 }
 
-// Whenever someone clicks a p tag
+// Whenever someone clicks a comments tag
 $(document).on("click", ".comments", function() {
   // Empty the notes from the note section
   $("#notes").empty();
@@ -54,17 +60,18 @@ $(document).on("click", ".comments", function() {
     });
 });
 
-// $(document).on("click", ".delete", function() {
-//   var thisId = $(this).attr("data-id");
-//   $.ajax({
-//     method: "DELETE",
-//     url: "/delete/" + thisId,
-//     // data: {_method: 'delete', _token :token},
-//     success: function(result) {
-//       $("'#"+thisId+"'").empty();
-//     }
-//   })
-// });
+$(document).on("click", ".delete", function() {
+  var thisId = $(this).attr("data-id");
+  console.log(thisId);
+  $.ajax({
+    method: "DELETE",
+    url: "/delete/" + thisId,
+    // data: {_method: 'delete', _token :token},
+    success: function(result) {
+      $("'#"+thisId+"'").empty();
+    }
+  })
+});
 
 // When you click the savenote button
 $(document).on("click", "#savenote", function() {

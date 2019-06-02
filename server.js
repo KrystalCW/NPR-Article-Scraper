@@ -106,11 +106,12 @@ app.post("/articles/:id", function(req, res) {
   })
 });
 
-// app.delete("/delete/:id", function(req, res) {
-//   db.Note.deleteOne({ _id: req.params.id }, function (err) {
-//     if (err) return handleError(err);
-//   });
-// });
+app.delete("/delete/:id", function(req, res) {
+  console.log(req.params.id);
+  db.Note.deleteOne({ _id: req.params.id }, function (err) {
+    if (err) return handleError(err);
+  });
+});
 
 // Start the server
 app.listen(PORT, function() {
