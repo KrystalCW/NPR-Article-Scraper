@@ -55,7 +55,7 @@ $(document).on("click", ".comments", function() {
 
       // If there's a note in the article
       if (data.note) {
-        $("#prev-comments").append('<div class="card" style="width: 18rem;"><div class="card-body"><h5 class="card-title">'+data.note.title+'</h5><p class="card-text">'+data.note.body+'</p><a href="#" class="btn btn-danger delete" data-id="'+data.note._id+'">Delete Comment</a></div></div>');
+        $("#prev-comments").append('<div class="card" id="card_'+data.note._id+'" style="width: 18rem;"><div class="card-body"><h5 class="card-title">'+data.note.title+'</h5><p class="card-text">'+data.note.body+'</p><a href="#" class="btn btn-danger delete" data-id="'+data.note._id+'">Delete Comment</a></div></div>');
       }
     });
 });
@@ -65,11 +65,16 @@ $(document).on("click", ".delete", function() {
   console.log(thisId);
   $.ajax({
     method: "DELETE",
-    url: "/delete/" + thisId,
-    // data: {_method: 'delete', _token :token},
-    success: function(result) {
-      $("'#"+thisId+"'").empty();
-    }
+    url: "/delete/" + thisId
+  }).then(function(data) {
+    // Log the response
+    console.log(data);
+    // Empty the notes section
+    $('#card_'+thisId).empty();
+  //   // data: {_method: 'delete', _token :token},
+  //   success: function(result) {
+      
+    //}
   })
 });
 
@@ -84,9 +89,9 @@ $(document).on("click", "#savenote", function() {
     url: "/articles/" + thisId,
     data: {
       // Value taken from title input
-      title: $("#titleinput").val(),
+      title: $("#name").val(),
       // Value taken from note textarea
-      body: $("#bodyinput").val()
+      body: $("#body").val()
     }
   })
     // With that done
@@ -94,7 +99,7 @@ $(document).on("click", "#savenote", function() {
       // Log the response
       console.log(data);
       // Empty the notes section
-      $("#notes").empty();
+      $(thisId).empty();
     });
 
   // Also, remove the values entered in the input and textarea for note entry

@@ -112,8 +112,10 @@ app.delete("/delete/:id", function(req, res) {
   // db.Article.findOne({ _id: })
   console.log(req.params.id);
   db.Note.deleteOne({ _id: req.params.id }, function (err) {
-    if (err) return handleError(err);
-  });
+    if (err) res.json(returnhandleError(err));
+  }).then( function(){
+    res.json(req.params.id);
+  })
 });
 
 // Start the server
